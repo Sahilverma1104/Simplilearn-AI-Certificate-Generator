@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Simplilearn Certificate Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column; 
+      background: #e0e0e0;
+      min-height: 100vh;
+    }
+    form {
+      background: white;
+      padding: 20px 50px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 320px;
+    }
+    input, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <form id="certForm">
+    <h3>Simplilearn AI Certificate Generator</h3>
+    <input type="text" name="fullname" id="fullname" placeholder="Full Name" required><br>
+    <input type="text" name="date" id="date" placeholder="Date of Completion (e.g. 19 Sep 2025)" required><br>
+    <button type="submit">Generate</button>
+  </form>
+
+  <script>
+    document.getElementById("certForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      
+      localStorage.setItem("fullname", document.getElementById("fullname").value);
+      localStorage.setItem("date", document.getElementById("date").value);
+
+      
+      window.location.href = "certificate.html";
+    });
+  </script>
+  <br><br><br><br>
+<footer style="text-align:center; padding:20px; background:#111; color:#fff;">
+  &copy; 2025 Sahil Verma. All rights reserved.
+</footer>
+</body>
+</html>
