@@ -1,84 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AI Simplilearn Certificate Generator</title>
-<style>
-body{
-  margin:0;
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#f3f6fb;
-  font-family: Arial, Helvetica, sans-serif;
-}
-.cert {
-  position:relative;
-  width: 836px;
-  height:564px;
-  background-image: url("certificate.png");
-  background-size:cover;
-  background-position:center;
-  box-shadow: 0 20px 40px rgba(10,30,80,.12);
-  border-radius:6px;
-}
-.cert .name {
-  position:absolute;
-  left: 65px;     
-  top: 232px;     
-  transform: translateY(-50%);
-  font-size: 33px;
-  font-family: "Bodoni MT", Georgia, serif;      
-  color: #379fff;
-  white-space: nowrap; 
-}
-.cert .date {
-  position:absolute;
-  left: 65px;   
-  bottom: 65px;  
-  font-family: "Bodoni MT", Georgia, serif; 
-  font-size: 16px;
-  color: #243445;
-}
-</style>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Simplilearn Certificate Generator</title>
+  <style>
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#f3f6fb;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .cert {
+      position:relative;
+      width: 800px;
+      height:564px;
+      background-image: url("certificate.jpg");
+      background-size:cover;
+      background-position:center;
+      box-shadow: 0 20px 40px rgba(10,30,80,.12);
+      border-radius:6px;
+    }
+    .cert .name {
+      position:absolute;
+      left: 71px;
+      top: 225px;
+      transform: translateY(-50%);
+      font-size: 30px;
+      color: #132033;
+      white-space: nowrap;
+      font-family: "Lato", sans-serif;
+      font-weight: 400;
+    }
+    .cert .date {
+      position:absolute;
+      left: 70px;
+      bottom: 88px;
+      font-family: "Lato", sans-serif;
+      font-size: 16px;
+      color: #243445;
+    }
+
+    
+    .cert .code {
+      position:absolute;
+      left: 189px;
+      bottom: 61px;
+      font-family: "Lato", sans-serif;
+      font-size: 13px;
+      color: #243445;
+      letter-spacing: 1px;
+    }
+  </style>
 </head>
 <body>
 
-<div class="cert">
-  <div class="name" id="cert-name"></div>
-  <div class="date" id="cert-date"></div>
-</div>
-
-<script>
-  function getDayWithSuffix(day) {
-    if (day > 3 && day < 21) return day + "<sup>th</sup>";
-    switch (day % 10) {
-      case 1: return day + "<sup>st</sup>";
-      case 2: return day + "<sup>nd</sup>";
-      case 3: return day + "<sup>rd</sup>";
-      default: return day + "<sup>th</sup>";
-    }
-  }
-
-  function formatDate(dateStr) {
-    let parts = dateStr.split(" ");
-    let day = parseInt(parts[0]);   
-    let month = parts[1];           
-    let year = parts[2];            
+  <div class="cert">
+    <div class="name" id="cert-name"></div>
+    <div class="date" id="cert-date"></div>
     
-    let formattedDay = getDayWithSuffix(day);
-    return `${formattedDay} ${month} ${year}`;
-  }
+    <div class="code" id="cert-code"></div>
+  </div>
 
-  
-  document.getElementById("cert-name").innerText = localStorage.getItem("fullname");
+  <script>
+    function getDayWithSuffix(day) {
+      if (day > 3 && day < 21) return day + "<sup>th</sup>";
+      switch (day % 10) {
+        case 1: return day + "<sup>st</sup>";
+        case 2: return day + "<sup>nd</sup>";
+        case 3: return day + "<sup>rd</sup>";
+        default: return day + "<sup>th</sup>";
+      }
+    }
 
-  let rawDate = localStorage.getItem("date");
-  if (rawDate) {
-    document.getElementById("cert-date").innerHTML = formatDate(rawDate); 
-  }
-</script>
+    function formatDate(dateStr) {
+      if (!dateStr) return "";
+      let parts = dateStr.trim().split(/\s+/);
+      let day = parseInt(parts[0], 10);
+      if (isNaN(day)) {
+        
+        return dateStr;
+      }
+      let month = parts[1] || "";
+      let year = parts[2] || "";
+      let formattedDay = getDayWithSuffix(day);
+      return `${formattedDay} ${month} ${year}`.trim();
+    }
+
+    
+    const name = localStorage.getItem("fullname") || "Your Name Here";
+    document.getElementById("cert-name").innerText = name;
+
+    const rawDate = localStorage.getItem("date");
+    if (rawDate) {
+      document.getElementById("cert-date").innerHTML = formatDate(rawDate);
+    } else {
+      document.getElementById("cert-date").innerText = "";
+    }
+
+    
+    function generate7Digit() {
+      return Math.floor(1000000 + Math.random() * 9000000);  
+    }
+
+    let existingCode = localStorage.getItem("certCode");
+    if (!existingCode) {
+      existingCode = generate7Digit().toString();
+      localStorage.setItem("certCode", existingCode);
+    }
+
+    document.getElementById("cert-code").innerText = "" + existingCode;
+  </script>
 </body>
 </html>
