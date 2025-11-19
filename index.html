@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Simplilearn Certificate Generator</title>
@@ -32,13 +33,19 @@
   <form id="certForm">
     <h3>Simplilearn AI Certificate Generator</h3>
     <input type="text" name="fullname" id="fullname" placeholder="Full Name" required><br>
-    <input type="text" name="date" id="date" placeholder="Date of Completion (e.g. 19 Sep 2025)" required><br>
+    <input type="text" name="date" id="date" placeholder="Date of Completion (e.g. 26 August 2025)" required><br>
     <button type="submit">Generate</button>
   </form>
 
   <script>
     document.getElementById("certForm").addEventListener("submit", function(e) {
       e.preventDefault();
+
+      
+      function generate7Digit() {
+        return Math.floor(1000000 + Math.random() * 9000000);
+      }
+      localStorage.setItem("certCode", generate7Digit());
 
       
       localStorage.setItem("fullname", document.getElementById("fullname").value);
